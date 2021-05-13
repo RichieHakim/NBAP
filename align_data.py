@@ -191,7 +191,7 @@ def align_camFrames_toWS(signal_GPIO_camTimes , camTimes_absolute , ws_camSignal
 
 
 def align_camSignal_toS2p_andToWS(camSignal , camTimes_wsInd , num_camera_frames , ws_frameTimes_wsTime , first_camPulse_camIdx , last_camPulse_camIdx , plot_pref):
-    ### resample factors_faceRhythm into ws and s2p times
+    ### resample temporalFactors_faceRhythm into ws and s2p times
     # this script assumes that the GPIO sync trace has identical indexing as the video that was used for the factor decomposition (hopefully it's the same video)
 
     tic = time.time()
