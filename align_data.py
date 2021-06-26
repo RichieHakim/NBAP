@@ -3,7 +3,11 @@ import numpy as np
 import scipy.stats
 import dateutil.parser
 
+from numba import njit, jit, prange
+
 from matplotlib import pyplot as plt
+
+from .helpers import round_numba
 
 def align_ws_toS2p(ws_galvoFlyBackTrace , num_frames_S2p , plot_pref):
     # Get ws frame times in ws time. Everything should be aligned to ws frame times (S2pInd)
@@ -190,7 +194,7 @@ def align_camFrames_toWS(signal_GPIO_camTimes , camTimes_absolute , ws_camSignal
     return camTimes_wsInd , camTimes_wsInd_rounded , first_camPulse_camIdx , last_camPulse_camIdx
 
 
-def align_camSignal_toS2p_andToWS(camSignal , camTimes_wsInd , num_camera_frames , ws_frameTimes_wsTime , first_camPulse_camIdx , last_camPulse_camIdx , plot_pref):
+def align_camSignal_toS2p_andToWS(camSignal , camTimes_wsInd , num_camera_frames , ws_frameTimes_wsTime , first_camPulse_camIdx , last_camPulse_camIdx , downsample_factor=None, plot_pref=False):
     ### resample temporalFactors_faceRhythm into ws and s2p times
     # this script assumes that the GPIO sync trace has identical indexing as the video that was used for the factor decomposition (hopefully it's the same video)
 
@@ -201,20 +205,53 @@ def align_camSignal_toS2p_andToWS(camSignal , camTimes_wsInd , num_camera_frames
     camSignal_Idx_withinWS = [(camSignal_camFrameTimes >= first_camPulse_camIdx) * 
                               (camSignal_camFrameTimes <= last_camPulse_camIdx)]
     camSignal_withinWS = camSignal[tuple(camSignal_Idx_withinWS)]
-    camSignal_camFrameIdx_withinWS = camSignal_camFrameTimes[tuple(camSignal_Idx_withinWS)]
-    camTimes_wsInd_withinWS = camTimes_wsInd[camSignal_camFrameIdx_withinWS]
+    camSignal_camFrameTimes_withinWS = camSignal_camFrameTimes[tuple(camSignal_Idx_withinWS)]
+    camTimes_wsInd_withinWS = camTimes_wsInd[camSignal_camFrameTimes_withinWS]
 
     function_interp = scipy.interpolate.interp1d(camTimes_wsInd_withinWS , camSignal_withinWS , kind='cubic' , axis=0)
     first_s2pIdx_usable = np.min(np.where(ws_frameTimes_wsTime > np.min(camTimes_wsInd_withinWS)))
 
-    camSignal_s2pInd = function_interp(ws_frameTimes_wsTime[first_s2pIdx_usable:])
-    camSignal_s2pInd = np.concatenate((np.zeros((first_s2pIdx_usable , camSignal_s2pInd.shape[1])) , camSignal_s2pInd) , axis=0)
+    camSignal_s2pInd = function_interp(ws_frameTimes_wsTime[first_s2pIdx_usable::downsample_factor])
+    chunk_to_concatenate = np.zeros(tuple(np.concatenate((np.array([first_s2pIdx_usable]), camSignal_s2pInd.shape[1:]))))
+    camSignal_s2pInd = np.concatenate((chunk_to_concatenate, camSignal_s2pInd) , axis=0)
     camSignal_s2pInd[camSignal_s2pInd < 0] = 0
 
     if plot_pref:
         plt.figure()
-        plt.plot(camSignal_s2pInd[:,0])
         plt.plot(camSignal[:,0])
-    print(f'total elapsed time: {round(time.time() - tic,2)} seconds')
+        plt.plot(camSignal_s2pInd[:,0])
+    print(f'Completed aligning camera signal to S2p. Total elapsed time: {round(time.time() - tic,2)} seconds')
 
     return camSignal_s2pInd , first_s2pIdx_usable
+
+
+# def align_faceTensor_toS2p_andToWS(camSignal , camTimes_wsInd , num_camera_frames , ws_frameTimes_wsTime , first_camPulse_camIdx , last_camPulse_camIdx , downsample_factor=None, plot_pref=False):
+#     ### resample the big Sxx_all tensor from face-rhythm into (optionally downsampled) ws and s2p times
+#     # this script assumes that the GPIO sync trace has similar indexing as the video and 'camSignal'
+#     #  though 'camSignal' is allow to be downsampled relative to the original (num_camera_frames) framerate
+
+#     tic = time.time()
+#     upsample_factor = num_camera_frames / camSignal.shape[0]
+
+#     camSignal_camFrameTimes = np.int64(np.round(np.linspace(upsample_factor , num_camera_frames , camSignal.shape[0] )))
+#     camSignal_Idx_withinWS = [(camSignal_camFrameTimes >= first_camPulse_camIdx) * 
+#                               (camSignal_camFrameTimes <= last_camPulse_camIdx)]
+#     camSignal_withinWS = camSignal[tuple(camSignal_Idx_withinWS)]
+#     camSignal_camFrameTimes_withinWS = camSignal_camFrameTimes[tuple(camSignal_Idx_withinWS)]
+#     camTimes_wsInd_withinWS = camTimes_wsInd[camSignal_camFrameTimes_withinWS]
+
+#     function_interp = scipy.interpolate.interp1d(camTimes_wsInd_withinWS , camSignal_withinWS , kind='cubic' , axis=0)
+#     first_s2pIdx_usable = np.min(np.where(ws_frameTimes_wsTime > np.min(camTimes_wsInd_withinWS)))
+
+#     camSignal_s2pInd = function_interp(ws_frameTimes_wsTime[first_s2pIdx_usable::downsample_factor])
+#     chunk_to_concatenate = np.zeros(tuple(np.concatenate((np.array([first_s2pIdx_usable]), camSignal_s2pInd.shape[1:]))))
+#     camSignal_s2pInd = np.concatenate((chunk_to_concatenate , camSignal_s2pInd) , axis=0)
+#     camSignal_s2pInd[camSignal_s2pInd < 0] = 0
+
+#     if plot_pref:
+#         plt.figure()
+#         plt.plot(camSignal_s2pInd[:,0])
+#         plt.plot(camSignal[:,0])
+#     print(f'Completed aligning camera signal to S2p. Total elapsed time: {round(time.time() - tic,2)} seconds')
+
+#     return camSignal_s2pInd , first_s2pIdx_usable
