@@ -168,13 +168,14 @@ def align_ws_camPulses_toWS(ws_camPulses , plot_pref):
     return ws_camSignal_bool_wsTime , ws_camSignal_wsTimes
 
 
-def convert_camTimeDates_toAbsoluteSeconds(camTimeDates):
+def convert_camTimeDates_toAbsoluteSeconds(camTimeDates, verbose=False):
 
     tic = time.time()
     n_timepoints = len(camTimeDates)
     camTimes_absolute = np.array(np.array(camTimeDates , dtype='datetime64') - np.datetime64(camTimeDates[0])  , dtype='float64')/10**9
 
-    print(f'Completed converting camera dates from camera data to absolute time. Total elapsed time: {round(time.time() - tic,2)} seconds')
+    if verbose:
+        print(f'Completed converting camera dates from camera data to absolute time. Total elapsed time: {round(time.time() - tic,2)} seconds')
 
     return camTimes_absolute
    
