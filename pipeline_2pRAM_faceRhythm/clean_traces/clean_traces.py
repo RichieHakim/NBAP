@@ -125,8 +125,6 @@ table_motionCorrection = pd.read_csv(path_motionCorrection, sep=', ', engine='py
 
 F , Fneu , iscell , ops , spks , stat , num_frames_S2p = ca2p_preprocessing.import_s2p(Path(dir_s2p))
 
-F = F[:110]
-Fneu = Fneu[:110]
 
 channelOffset_correction = params['make_dFoF']['channelOffset_correction']
 percentile_baseline = params['make_dFoF']['percentile_baseline']
