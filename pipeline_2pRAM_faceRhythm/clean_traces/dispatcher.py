@@ -51,7 +51,7 @@ Path(dir_save).mkdir(parents=True, exist_ok=True)
 params_template = {
     'paths': {
         'dir_sessionData': dir_data,
-        'dir_sub_s2p': '/suite2p_o2_output/jobNum_0/suite2p/plane0',
+        'dir_sub_s2p': '/suite2p/plane0',
         'fileName_re_motionCorrection': '*Motion*.csv',
         'fileName_save_denoisingVariables': 'denoising_variables',
         'dir_github': '/n/data1/hms/neurobio/sabatini/rich/github_repos',
