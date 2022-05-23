@@ -157,7 +157,7 @@ echo "loading modules"
 module load gcc/9.2.0
 
 echo "activating environment"
-source activate suite2p
+source activate NBAP
 
 echo "starting job"
 python "$@"

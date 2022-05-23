@@ -75,11 +75,10 @@ shutil.copy2(path_script, str(Path(dir_save) / Path(path_script).name));
 
 ## standard libraries
 
-import matplotlib.pyplot as plt
-
 import numpy as np
 import pandas as pd
 import sklearn
+import matplotlib.pyplot as plt
 
 import scipy.io
 import scipy.interpolate
