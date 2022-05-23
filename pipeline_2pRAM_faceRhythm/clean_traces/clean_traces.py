@@ -125,8 +125,8 @@ table_motionCorrection = pd.read_csv(path_motionCorrection, sep=', ', engine='py
 
 F , Fneu , iscell , ops , spks , stat , num_frames_S2p = ca2p_preprocessing.import_s2p(Path(dir_s2p))
 
-F = F[:100]
-Fneu = Fneu[:100]
+F = F[:110]
+Fneu = Fneu[:110]
 
 channelOffset_correction = params['make_dFoF']['channelOffset_correction']
 percentile_baseline = params['make_dFoF']['percentile_baseline']
@@ -278,7 +278,7 @@ plt.savefig(str(dir_save / 'trace_quality_metrics.png'))
 
 plt.figure()
 plt.plot(goodROIs_tqm)
-plt.plot(scipy.signal.savgol_filter(goodROIs_tqm, 101,1))
+plt.plot(scipy.signal.savgol_filter(goodROIs_tqm, 101,3))
 plt.xlabel('ROI number')
 plt.ylabel('included')
 plt.savefig(str(dir_save / 'goodROIs_tqm__overROInumber.png'))

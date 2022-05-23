@@ -1,4 +1,5 @@
 conda create --name NBAP python=3.8
+conda activate NBAP
 
 pip install --upgrade pip
 pip install numpy matplotlib pandas scikit-learn scipy rastermap tqdm paramiko numba pandas opt_einsum
