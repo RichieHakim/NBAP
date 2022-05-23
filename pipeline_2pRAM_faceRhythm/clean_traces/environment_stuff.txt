@@ -1,6 +1,6 @@
 python=3.9
 
-pip install numpy matplotlib pandas scikit-learn scipy rastermap tqdm
+pip install numpy matplotlib pandas scikit-learn scipy rastermap tqdm paramiko
 pip install numba 
 pip install numpy==1.2.0
 pip install pandas opt_einsum
