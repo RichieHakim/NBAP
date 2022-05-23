@@ -211,7 +211,7 @@ print(f'Total Explain Variance Ratio of dFoF by dFoF_ransac: {EVR_total_weighted
 
 ### Inclusion criteria for dFoF
 
-thresh_EVR_ransac = 0.10  ## Only ROIs with EVRs below this value will be kept
+thresh_EVR_ransac = params['ransac']['thresh_EVR_ransac']  ## Only ROIs with EVRs below this value will be kept
 goodROIs_ransacEVR = EVR_ransac < thresh_EVR_ransac
 badROIs_ransacEVR = np.logical_not(goodROIs_ransacEVR)
 print(f'RANSAC EVR inclusion threshold: num good cells: {goodROIs_ransacEVR.sum()}, num bad cells: {badROIs_ransacEVR.sum()}')
