@@ -83,7 +83,7 @@ dFoF_smooth = timeSeries.convolve_along_axis(
 
 cascade.download_model('update_models', model_folder=str(Path(params['dir_github']) / 'Cascade' / 'Pretrained_models'),verbose = 1)
 
-cascade.download_model('Global_EXC_5Hz_smoothing200ms_causalkernel', model_folder=str(Path(params['dir_github']) / 'Cascade' / 'Pretrained_models'), verbose = 1)
+cascade.download_model(params['model'], model_folder=str(Path(params['dir_github']) / 'Cascade' / 'Pretrained_models'), verbose = 1)
 
 yaml_file = open(str(Path(params['dir_github']) / 'Cascade' / 'Pretrained_models' / 'available_models.yaml'))
 X = yaml.load(yaml_file, Loader=yaml.Loader)
