@@ -103,7 +103,7 @@ spike_prob = np.concatenate([cascade.predict(
     padding=0,
     verbosity=params['verbosity_cascadePredict']
 ) for batch in tqdm(indexing.make_batches(
-    dFoF_smooth[:20], 
+    dFoF_smooth, 
     batch_size=params['batchSize_nROIs']
 ))], axis=0)
 
