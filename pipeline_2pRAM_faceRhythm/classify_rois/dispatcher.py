@@ -89,18 +89,18 @@ shutil.copy2(path_script, str(Path(dir_save) / Path(path_script).name));
 
 
 
-# ## save parameters to file
-# parameters_batch = {
-#     'params': params,
-#     # 'params_unchanging': params_unchanging,
-#     # 'params_changing': params_changing
-# }
-# import json
-# with open(str(Path(dir_save) / 'parameters_batch.json'), 'w') as f:
-#     json.dump(parameters_batch, f)
+## save parameters to file
+parameters_batch = {
+    'params': params,
+    # 'params_unchanging': params_unchanging,
+    # 'params_changing': params_changing
+}
+import json
+with open(str(Path(dir_save) / 'parameters_batch.json'), 'w') as f:
+    json.dump(parameters_batch, f)
 
-# with open(str(Path(dir_save) / 'parameters_batch.json')) as f:
-#     test = json.load(f)
+with open(str(Path(dir_save) / 'parameters_batch.json')) as f:
+    test = json.load(f)
 
 
 ## run batch_run function

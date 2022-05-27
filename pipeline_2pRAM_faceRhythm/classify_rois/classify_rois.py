@@ -15,19 +15,19 @@ import torch
 import torchvision
 import scipy.stats
 
-# ### batch_run stuff
-# from pathlib import Path
+### batch_run stuff
+from pathlib import Path
 
-# import sys
-# path_script, path_params, dir_save = sys.argv
-# dir_save = Path(dir_save)
+import sys
+path_script, path_params, dir_save = sys.argv
+dir_save = Path(dir_save)
                 
-# import json
-# with open(path_params, 'r') as f:
-#     params = json.load(f)
+import json
+with open(path_params, 'r') as f:
+    params = json.load(f)
 
-# import shutil
-# shutil.copy2(path_script, str(Path(dir_save) / Path(path_script).name));
+import shutil
+shutil.copy2(path_script, str(Path(dir_save) / Path(path_script).name));
 
 params = {
     'dir_github': '/media/rich/Home_Linux_partition/github_repos/',
