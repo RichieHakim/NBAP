@@ -585,3 +585,44 @@ def get_spread_out_points(embeddings, thresh_dist=0.3, n_iter=3):
     dist_mat_pruned, bool_good = prune(dist_mat_pruned, thresh_dist, bool_good)
 
     return bool_good, dist_mat_pruned
+
+
+## importing simple_cmap because I don't want to figure out cv2 import stuff necessary in plotting_helpers
+def simple_cmap(colors, name='none'):
+    """Create a colormap from a sequence of rgb values.
+    Stolen with love from Alex (https://gist.github.com/ahwillia/3e022cdd1fe82627cbf1f2e9e2ad80a7ex)
+    
+    Args:
+        colors (list):
+            List of RGB values
+        name (str):
+            Name of the colormap
+
+    Returns:
+        cmap:
+            Colormap
+
+    Demo:
+    cmap = simple_cmap([(1,1,1), (1,0,0)]) # white to red colormap
+    cmap = simple_cmap(['w', 'r'])         # white to red colormap
+    cmap = simple_cmap(['r', 'b', 'r'])    # red to blue to red
+    """
+
+    # check inputs
+    n_colors = len(colors)
+    if n_colors <= 1:
+        raise ValueError('Must specify at least two colors')
+
+    # convert colors to rgb
+    colors = [colorConverter.to_rgb(c) for c in colors]
+
+    # set up colormap
+    r, g, b = colors[0]
+    cdict = {'red': [(0.0, r, r)], 'green': [(0.0, g, g)], 'blue': [(0.0, b, b)]}
+    for i, (r, g, b) in enumerate(colors[1:]):
+        idx = (i+1) / (n_colors-1)
+        cdict['red'].append((idx, r, r))
+        cdict['green'].append((idx, g, g))
+        cdict['blue'].append((idx, b, b))
+
+    return LinearSegmentedColormap(name, {k: tuple(v) for k, v in cdict.items()})

@@ -63,7 +63,7 @@ Path(dir_save).mkdir(parents=True, exist_ok=True)
 
 
 params_template = {
-    'dir_github': '/media/rich/Home_Linux_partition/github_repos/',
+    'dir_github': dir_github,
     'dir_s2p': dir_data,  ## directory containing the stat.npy and ops.npy files
 
     'fileName_params_nnTraining': 'params.json',  ## params.json used to train the network
