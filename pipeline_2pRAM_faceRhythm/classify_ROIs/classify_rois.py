@@ -50,7 +50,7 @@ from basic_neural_processing_modules import pickle_helpers, indexing, torch_help
 
 # %load_ext autoreload
 # %autoreload 2
-from NBAP.pipeline_2pRAM_faceRhythm.classify_rois import util
+from NBAP.pipeline_2pRAM_faceRhythm.classify_ROIs import util
 
 
 dir_save_network_files = str(Path(dir_save).resolve() / 'network_files')
@@ -136,7 +136,7 @@ dataloader_labeled = out = torch.utils.data.DataLoader(
         shuffle=False,
         drop_last=False,
         pin_memory=True,
-        num_workers=36,
+        num_workers=10,
         persistent_workers=True,
 #         prefetch_factor=2
 )
