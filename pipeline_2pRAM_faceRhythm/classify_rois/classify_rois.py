@@ -58,7 +58,6 @@ dir_save_network_files = str(Path(dir_save).resolve() / 'network_files')
 import gdown
 gdown.download_folder(id=params['gdriveID_networkFiles'], output=dir_save_network_files, quiet=True, use_cookies=False)
 sys.path.append(dir_save_network_files)
-print(sys.path)
 import model
 
 path_state_dict = str(Path(dir_save_network_files).resolve() / params['fileName_state_dict'])
@@ -189,7 +188,7 @@ latents_swt = get_latents_swt(sf_rs_concat, scattering.cuda(), DEVICE).cpu()
 
 
 from util import Classifier
-classifier_vars = pickle_helpers.simple_load(params['path_classifier_vars'])
+classifier_vars = pickle_helpers.simple_load(path_classifier)
 classifier = classifier_vars['classifier']
 
 preds = classifier(features_nn, latents_swt, return_preds_proba='preds')

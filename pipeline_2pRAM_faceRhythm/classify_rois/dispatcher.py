@@ -68,7 +68,7 @@ params_template = {
 
     'fileName_params_nnTraining': 'params.json',  ## params.json used to train the network
     'fileName_state_dict': 'ConvNext_tiny__1_0_unfrozen__simCLR.pth',
-    'fileName_classifier_vars': 'classifier.pkl',  ## this can be generated using the train_logreg_classifier.ipynb notebook
+    'fileName_classifier': 'classifier.pkl',  ## this can be generated using the train_logreg_classifier.ipynb notebook
     'gdriveID_networkFiles': '1Xh02nfw_Fgb9uih1WCrsFNI-WIYXDVDn',  ## this is the google drive ID for the folder containing the network files and classifier
 
     'pref_saveFigs': True,
@@ -136,8 +136,8 @@ sbatch_config_list = \
 #SBATCH --partition=gpu_requeue
 #SBATCH -c 20
 #SBATCH -n 1
-#SBATCH --mem=36GB
-#SBATCH --time=0-00:05:00
+#SBATCH --mem=32GB
+#SBATCH --time=0-00:10:00
 
 unset XDG_RUNTIME_DIR
 
@@ -154,6 +154,10 @@ source activate NBAP
 echo "starting job"
 python "$@"
 """ for path in paths_log]
+
+#SBATCH --gres=gpu:rtx6000:1
+#SBATCH --partition=gpu_requeue
+
 
 server.batch_run(
     paths_scripts=paths_scripts,
