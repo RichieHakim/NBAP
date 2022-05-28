@@ -133,7 +133,7 @@ sbatch_config_list = \
 #SBATCH --job-name={name_slurm}
 #SBATCH --output={path}
 #SBATCH --gres=gpu:rtx6000:1
-#SBATCH --partition=gpu_quad
+#SBATCH --partition=gpu_requeue
 #SBATCH -c 20
 #SBATCH -n 1
 #SBATCH --mem=36GB

@@ -43,9 +43,12 @@ shutil.copy2(path_script, str(Path(dir_save) / Path(path_script).name));
 import sys
 sys.path.append(params['dir_github'])
 
+print(params['dir_github'])
+print('')
+print(sys.path)
+
 # %load_ext autoreload
 # %autoreload 2
-import NBAP
 from NBAP.pipeline_2pRAM_faceRhythm.classify_ROIs import util
 from NBAP.pipeline_2pRAM_faceRhythm.classify_ROIs.network import model
 
