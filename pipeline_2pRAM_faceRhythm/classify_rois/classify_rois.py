@@ -43,10 +43,6 @@ shutil.copy2(path_script, str(Path(dir_save) / Path(path_script).name));
 import sys
 sys.path.append(params['dir_github'])
 
-print(params['dir_github'])
-print('')
-print(sys.path)
-
 
 # %load_ext autoreload
 # %autoreload 2
@@ -288,7 +284,7 @@ import sparse
 sf_sparse_scaled = sf_sparse.multiply(sf_sparse.max(axis=1).power(-1))
 sf_sparse_scaled_rsFOV = sparse.COO(sf_sparse_scaled).reshape((len(stat), ops['Ly'], ops['Lx']))
 
-colors = plotting_helpers.simple_cmap(([0,0.6,1], [0,0.9,0.2], [0.7,0.5,0], [1,0,0]))
+colors = util.simple_cmap(([0,0.6,1], [0,0.9,0.2], [0.7,0.5,0], [1,0,0]))
 n_classes = 4
 sf_sparse_scaled_rsFOV_colored = np.stack([(sf_sparse_scaled_rsFOV[preds==ii,:,:,None] * np.array(colors(ii/(n_classes-1)))[None,None,:3]).sum(0) for ii in range(n_classes)], axis=-1).sum(-1).todense()
 
