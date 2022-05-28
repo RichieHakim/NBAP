@@ -607,6 +607,7 @@ def simple_cmap(colors, name='none'):
     cmap = simple_cmap(['w', 'r'])         # white to red colormap
     cmap = simple_cmap(['r', 'b', 'r'])    # red to blue to red
     """
+    from matplotlib.colors import LinearSegmentedColormap, colorConverter
 
     # check inputs
     n_colors = len(colors)
