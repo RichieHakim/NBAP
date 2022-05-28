@@ -55,11 +55,10 @@ from NBAP.pipeline_2pRAM_faceRhythm.classify_rois import util
 
 dir_save_network_files = str(Path(dir_save).resolve() / 'network_files')
 sys.path.append(dir_save_network_files)
-import model
-
 
 import gdown
 gdown.download_folder(id=params['gdriveID_networkFiles'], output=dir_save_network_files, quiet=True, use_cookies=False)
+import model
 
 path_state_dict = str(Path(dir_save_network_files).resolve() / params['fileName_state_dict'])
 path_nnTraining = str(Path(dir_save_network_files).resolve() / params['fileName_params_nnTraining'])
