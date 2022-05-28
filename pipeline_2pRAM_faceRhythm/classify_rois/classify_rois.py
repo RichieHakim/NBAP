@@ -47,15 +47,15 @@ print(params['dir_github'])
 print('')
 print(sys.path)
 
-# %load_ext autoreload
-# %autoreload 2
-from NBAP.pipeline_2pRAM_faceRhythm.classify_ROIs import util
-from NBAP.pipeline_2pRAM_faceRhythm.classify_ROIs.network import model
 
 # %load_ext autoreload
 # %autoreload 2
 from basic_neural_processing_modules import pickle_helpers, indexing, plotting_helpers, torch_helpers
 
+# %load_ext autoreload
+# %autoreload 2
+from NBAP.pipeline_2pRAM_faceRhythm.classify_ROIs import util
+from NBAP.pipeline_2pRAM_faceRhythm.classify_ROIs.network import model
 
 
 dir_save_network_files = str(Path(dir_save).resolve() / 'network_files')
