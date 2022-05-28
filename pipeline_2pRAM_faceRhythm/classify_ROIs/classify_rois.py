@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 import torch
 import torchvision
 import scipy.stats
+import time
 
 ### batch_run stuff
 from pathlib import Path
@@ -43,22 +44,21 @@ shutil.copy2(path_script, str(Path(dir_save) / Path(path_script).name));
 import sys
 sys.path.append(params['dir_github'])
 
-
-# %load_ext autoreload
-# %autoreload 2
+print('starting: importing custom modules')
 from basic_neural_processing_modules import pickle_helpers, indexing, torch_helpers
 
-# %load_ext autoreload
-# %autoreload 2
 from NBAP.pipeline_2pRAM_faceRhythm.classify_ROIs import util
+print('completed: importing custom modules')
 
 
 dir_save_network_files = str(Path(dir_save).resolve() / 'network_files')
 
+print(f"starting: downloading network from {params['gdriveID_networkFiles']}")
 import gdown
 gdown.download_folder(id=params['gdriveID_networkFiles'], output=dir_save_network_files, quiet=True, use_cookies=False)
 sys.path.append(dir_save_network_files)
 import model
+print(f"completed: downloading network")
 
 path_state_dict = str(Path(dir_save_network_files).resolve() / params['fileName_state_dict'])
 path_nnTraining = str(Path(dir_save_network_files).resolve() / params['fileName_params_nnTraining'])
@@ -71,21 +71,23 @@ path_classifier = str(Path(dir_save_network_files).resolve() / params['fileName_
 path_stat = str(Path(params['dir_s2p']) / 'stat.npy')
 path_ops = str(Path(params['dir_s2p']) / 'ops.npy')
 
+print('starting: loading stat file')
 sf_all = util.import_multiple_stat_files(   
     paths_statFiles=[path_stat],
     out_height_width=[36,36],
     max_footprint_width=1441,
     plot_pref=True
 )
+print('completed: loading stat file')
 
+print('starting: resizing ROIs')
 sf_ptiles = np.array([np.percentile(np.sum(sf>0, axis=(1,2)), 90) for sf in tqdm(sf_all)])
-
 scales_forRS = (250/sf_ptiles)**0.6
-
 sf_rs = [np.stack([util.resize_affine(img, scale=scales_forRS[ii], clamp_range=True) for img in sf], axis=0) for ii, sf in enumerate(tqdm(sf_all))]
 
 sf_all_cat = np.concatenate(sf_all, axis=0)
 sf_rs_concat = np.concatenate(sf_rs, axis=0)
+print('completed: resizing ROIs')
 
 import scipy.signal
 
@@ -105,6 +107,7 @@ axs[1].set_title('ROI sizes resized')
 if params['pref_saveFigs']:
     plt.savefig(str(Path(dir_save) / 'ROI_sizes.png'))
 
+print('starting: making dataloader')
 transforms_classifier = torch.nn.Sequential(
     util.ScaleDynamicRange(scaler_bounds=(0,1)),
     
@@ -140,9 +143,9 @@ dataloader_labeled = out = torch.utils.data.DataLoader(
         persistent_workers=True,
 #         prefetch_factor=2
 )
+print('completed: making dataloader')
 
-
-
+print('starting: importing network parameters and making network')
 import json
 with open(path_nnTraining) as f:
     params_nnTraining = json.load(f)
@@ -167,9 +170,13 @@ model_nn.load_state_dict(torch.load(path_state_dict))
 DEVICE = torch_helpers.set_device(use_GPU=params['useGPU'])
 
 model_nn = model_nn.to(DEVICE)
+print('completed: importing network parameters and making network')
 
+print(f'starting: running data through network {time.ctime()}')
 features_nn = torch.cat([model_nn(data[0][0].to(DEVICE)).detach() for data in tqdm(dataloader_labeled)], dim=0).cpu()
+print(f'completed: running data through network {time.ctime()}')
 
+print('starting: running scattering wavelet transform')
 from kymatio import Scattering2D
 
 def get_latents_swt(sfs, swt, device_model):
@@ -184,9 +191,9 @@ if DEVICE != 'cpu':
     scattering = scattering.cuda()
 
 latents_swt = get_latents_swt(sf_rs_concat, scattering.cuda(), DEVICE).cpu()
+print('complete: running scattering wavelet transform')
 
-
-
+print('starting: importing and running classifier')
 from util import Classifier
 classifier_vars = pickle_helpers.simple_load(path_classifier)
 classifier = classifier_vars['classifier']
@@ -195,9 +202,11 @@ preds = classifier(features_nn, latents_swt, return_preds_proba='preds')
 proba = classifier(features_nn, latents_swt, return_preds_proba='proba')
 
 goodROIs = np.isin(preds, params['classes_toInclude'])
+print('completed: importing and running classifier')
 
 print(f'num good ROIs: {goodROIs.sum()}, num bad ROIs: {(~goodROIs).sum()}')
 
+print(f'starting: plotting {time.ctime()}')
 from umap import UMAP
 umap = UMAP(
     n_neighbors=30,
@@ -298,8 +307,9 @@ plt.imshow(sf_sparse_scaled_rsFOV_colored_square, aspect='auto')
 if params['pref_saveFigs']:
     plt.savefig(str(Path(dir_save) / 'FOV_colored.png'))
 
+print(f'completed: plotting {time.ctime()}')
 
-
+print('starting: saving')
 classification_output = {
     'goodROIs': goodROIs,
     'preds': preds,
@@ -309,3 +319,5 @@ classification_output = {
 }
 
 pickle_helpers.simple_save(classification_output, str(Path(dir_save) / 'classification_output.pkl'))
+print('completed: saving')
+print(f'RUN COMPLETE {time.ctime()}')
