@@ -70,7 +70,7 @@ params_template = {
     'fileName_state_dict': 'ConvNext_tiny__1_0_unfrozen__simCLR.pth',
     'fileName_classifier_vars': 'classifier.pkl',  ## this can be generated using the train_logreg_classifier.ipynb notebook
     'gdriveID_networkFiles': '1Xh02nfw_Fgb9uih1WCrsFNI-WIYXDVDn',  ## this is the google drive ID for the folder containing the network files and classifier
-    
+
     'pref_saveFigs': True,
     'useGPU': True,
     'classes_toInclude': [0,1,2]
@@ -132,7 +132,8 @@ sbatch_config_list = \
 [f"""#!/usr/bin/bash
 #SBATCH --job-name={name_slurm}
 #SBATCH --output={path}
-#SBATCH --partition=gpu_requeue
+#SBATCH --gres=gpu:rtx6000:1
+#SBATCH --partition=gpu_quad
 #SBATCH -c 20
 #SBATCH -n 1
 #SBATCH --mem=36GB

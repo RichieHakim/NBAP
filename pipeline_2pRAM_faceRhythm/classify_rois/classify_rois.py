@@ -45,6 +45,7 @@ sys.path.append(params['dir_github'])
 
 # %load_ext autoreload
 # %autoreload 2
+import NBAP
 from NBAP.pipeline_2pRAM_faceRhythm.classify_ROIs import util
 from NBAP.pipeline_2pRAM_faceRhythm.classify_ROIs.network import model
 
