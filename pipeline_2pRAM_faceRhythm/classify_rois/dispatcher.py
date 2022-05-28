@@ -1,3 +1,18 @@
+"""
+In the google drive folder, there needs to be files called:
+- model.py
+    - this should contain a function called 'make_model'
+- params.json
+    - this should contain the params dictionary used to make the model
+- classifier.pkl
+    - this should contain an item called 'classifier' that contains
+       the classifier used to make the model
+- ['fileName_state_dict'].pth
+    - this should contain the state_dict of the model
+    - name should be specified below
+"""
+
+
 # from IPython.core.display import display, HTML
 # display(HTML("<style>.container { width:95% !important; }</style>"))
 
@@ -20,7 +35,6 @@ sys.path.append(dir_github)
 # %load_ext autoreload
 # %autoreload 2
 from basic_neural_processing_modules import container_helpers, server
-# from s2p_on_o2 import remote_run_s2p
 
 
 args = sys.argv
@@ -50,15 +64,14 @@ Path(dir_save).mkdir(parents=True, exist_ok=True)
 
 params_template = {
     'dir_github': '/media/rich/Home_Linux_partition/github_repos/',
-    'dir_s2p': dir_data,
-    'path_params_nnTraining': '/media/rich/Home_Linux_partition/github_repos/NBAP/pipeline_2pRAM_faceRhythm/classify_ROIs/network/params.json',
-    # 'path_state_dict': '/media/rich/Home_Linux_partition/github_repos/NBAP/pipeline_2pRAM_faceRhythm/classify_ROIs/network/ConvNext_tiny__1_0_unfrozen__simCLR.pth',
+    'dir_s2p': dir_data,  ## directory containing the stat.npy and ops.npy files
+
+    'fileName_params_nnTraining': 'params.json',  ## params.json used to train the network
     'fileName_state_dict': 'ConvNext_tiny__1_0_unfrozen__simCLR.pth',
-    # 'path_classifier_vars': '/media/rich/Home_Linux_partition/github_repos/NBAP/pipeline_2pRAM_faceRhythm/classify_ROIs/classifier.pkl',
-    'fileName_classifier_vars': 'classifier.pkl',
-    'fileName_model': 'model.py',
-    'gdriveID_networkFiles': '1Xh02nfw_Fgb9uih1WCrsFNI-WIYXDVDn',
-    'pref_saveFigs': False,
+    'fileName_classifier_vars': 'classifier.pkl',  ## this can be generated using the train_logreg_classifier.ipynb notebook
+    'gdriveID_networkFiles': '1Xh02nfw_Fgb9uih1WCrsFNI-WIYXDVDn',  ## this is the google drive ID for the folder containing the network files and classifier
+    
+    'pref_saveFigs': True,
     'useGPU': True,
     'classes_toInclude': [0,1,2]
 }
@@ -89,18 +102,18 @@ shutil.copy2(path_script, str(Path(dir_save) / Path(path_script).name));
 
 
 
-## save parameters to file
-parameters_batch = {
-    'params': params,
-    # 'params_unchanging': params_unchanging,
-    # 'params_changing': params_changing
-}
-import json
-with open(str(Path(dir_save) / 'parameters_batch.json'), 'w') as f:
-    json.dump(parameters_batch, f)
+# ## save parameters to file
+# parameters_batch = {
+#     'params': params,
+#     # 'params_unchanging': params_unchanging,
+#     # 'params_changing': params_changing
+# }
+# import json
+# with open(str(Path(dir_save) / 'parameters_batch.json'), 'w') as f:
+#     json.dump(parameters_batch, f)
 
-with open(str(Path(dir_save) / 'parameters_batch.json')) as f:
-    test = json.load(f)
+# with open(str(Path(dir_save) / 'parameters_batch.json')) as f:
+#     test = json.load(f)
 
 
 ## run batch_run function

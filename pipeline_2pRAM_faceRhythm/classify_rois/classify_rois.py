@@ -29,16 +29,16 @@ with open(path_params, 'r') as f:
 import shutil
 shutil.copy2(path_script, str(Path(dir_save) / Path(path_script).name));
 
-params = {
-    'dir_github': '/media/rich/Home_Linux_partition/github_repos/',
-    'dir_s2p': '/media/rich/bigSSD/analysis_data/face_rhythm_paper/fig_4/2pRAM_motor_mapping/AEG21/2022_05_13/suite2p_o2_output/jobNum_0/suite2p/plane0/',
-    'path_params_nnTraining': '/media/rich/Home_Linux_partition/github_repos/NBAP/pipeline_2pRAM_faceRhythm/classify_ROIs/network/params.json',
-    'path_state_dict': '/media/rich/Home_Linux_partition/github_repos/NBAP/pipeline_2pRAM_faceRhythm/classify_ROIs/network/ConvNext_tiny__1_0_unfrozen__simCLR.pth',
-    'path_classifier_vars': '/media/rich/Home_Linux_partition/github_repos/NBAP/pipeline_2pRAM_faceRhythm/classify_ROIs/classifier.pkl',
-    'pref_saveFigs': False,
-    'useGPU': True,
-    'classes_toInclude': [0,1,2]
-}
+# params = {
+#     'dir_github': '/media/rich/Home_Linux_partition/github_repos/',
+#     'dir_s2p': '/media/rich/bigSSD/analysis_data/face_rhythm_paper/fig_4/2pRAM_motor_mapping/AEG21/2022_05_13/suite2p_o2_output/jobNum_0/suite2p/plane0/',
+#     'path_params_nnTraining': '/media/rich/Home_Linux_partition/github_repos/NBAP/pipeline_2pRAM_faceRhythm/classify_ROIs/network/params.json',
+#     'path_state_dict': '/media/rich/Home_Linux_partition/github_repos/NBAP/pipeline_2pRAM_faceRhythm/classify_ROIs/network/ConvNext_tiny__1_0_unfrozen__simCLR.pth',
+#     'path_classifier_vars': '/media/rich/Home_Linux_partition/github_repos/NBAP/pipeline_2pRAM_faceRhythm/classify_ROIs/classifier.pkl',
+#     'pref_saveFigs': False,
+#     'useGPU': True,
+#     'classes_toInclude': [0,1,2]
+# }
 
 import sys
 sys.path.append(params['dir_github'])
@@ -55,19 +55,18 @@ from basic_neural_processing_modules import pickle_helpers, indexing, plotting_h
 
 
 dir_save_network_files = str(Path(dir_save).resolve() / 'network_files')
-
 sys.path.append(dir_save_network_files)
-
 import model
-
-path_state_dict = str(Path(dir_save_network_files).resolve() / params['fileName_state_dict'])
-path_nnTraining = str(Path(dir_save_network_files).resolve() / params['fileName_classifier_vars'])
-# path_model = str(Path(dir_save_network_files).resolve() / params['fileName_model'])
 
 
 import gdown
-
 gdown.download_folder(id=params['gdriveID_networkFiles'], output=dir_save_network_files, quiet=True, use_cookies=False)
+
+path_state_dict = str(Path(dir_save_network_files).resolve() / params['fileName_state_dict'])
+path_nnTraining = str(Path(dir_save_network_files).resolve() / params['fileName_params_nnTraining'])
+# path_model = str(Path(dir_save_network_files).resolve() / params['fileName_model'])
+path_classifier = str(Path(dir_save_network_files).resolve() / params['fileName_classifier'])
+
 
 
 
