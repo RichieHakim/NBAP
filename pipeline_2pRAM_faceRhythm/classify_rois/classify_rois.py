@@ -46,7 +46,7 @@ sys.path.append(params['dir_github'])
 
 # %load_ext autoreload
 # %autoreload 2
-from basic_neural_processing_modules import pickle_helpers, indexing, plotting_helpers, torch_helpers
+from basic_neural_processing_modules import pickle_helpers, indexing, torch_helpers
 
 # %load_ext autoreload
 # %autoreload 2
