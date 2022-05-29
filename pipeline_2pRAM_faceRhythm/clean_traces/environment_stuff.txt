@@ -8,10 +8,12 @@ pip install numpy matplotlib pandas scikit-learn scipy rastermap tqdm paramiko n
 pip install numba 
 pip install numpy==1.20.0
 pip install rolling-quantiles
-pip install torch==1.10.1+cu111 torchvision==0.11.2+cu111 torchaudio==0.10.1 -f https://download.pytorch.org/whl/torch_stable.html
+
+### pip install torch==1.10.1+cu111 torchvision==0.11.2+cu111 torchaudio==0.10.1 -f https://download.pytorch.org/whl/torch_stable.html
 
 ## for classify_rois
 pip install gdown kymatio umap-learn sparse
+pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu113
 
 # git clone https://github.com/marmarelis/rolling-quantiles
 # cd rolling-quantiles/python

@@ -150,7 +150,6 @@ def stat_to_sparse_spatial_footprints(
     RH 2022
     """
     import scipy.sparse
-    from tqdm import tqdm
 
     isInt = np.issubdtype(dtype, np.integer)
 
@@ -177,7 +176,7 @@ def stat_to_sparse_spatial_footprints(
             lam = lam / lam.sum()
         sf[roi['ypix'], roi['xpix']] = lam
         return scipy.sparse.csr_matrix(sf.reshape(1, -1))
-    sf_all = [make_sf_sparse(roi) for roi in tqdm(stat)]
+    sf_all = [make_sf_sparse(roi) for roi in stat]
     return scipy.sparse.vstack(sf_all)
 
 
@@ -543,6 +542,7 @@ def get_spread_out_points(embeddings, thresh_dist=0.3, n_iter=3):
     import random
     import copy
     import sklearn
+    from tqdm import tqdm
 
     def make_dist_mat(embeddings):
         dist_mat = sklearn.neighbors.NearestNeighbors(algorithm='auto', leaf_size=30, metric='minkowski', p=2, metric_params=None, n_jobs=None).fit(embeddings).kneighbors_graph(embeddings, n_neighbors=300, mode='distance').toarray()
@@ -552,7 +552,7 @@ def get_spread_out_points(embeddings, thresh_dist=0.3, n_iter=3):
     def prune(dist_mat_pruned, thresh_dist, bool_good):
         idx_rand = np.random.permutation(np.arange(dist_mat_pruned.shape[0]))
 
-        for idx in idx_rand:
+        for idx in tqdm(idx_rand):
             if np.nanmin(dist_mat_pruned[idx]) < thresh_dist:
 
                 dist_mat_pruned[idx] = np.nan
