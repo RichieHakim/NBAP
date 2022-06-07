@@ -23,4 +23,4 @@ pip3 install torch torchvision torchaudio --extra-index-url https://download.pyt
 # cd torchinterp1d
 # pip install -e .
 
-pip install pywavesurfer
+pip install pywavesurfer paramiko
