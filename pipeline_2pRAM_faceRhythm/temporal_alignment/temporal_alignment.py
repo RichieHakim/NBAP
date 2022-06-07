@@ -100,7 +100,7 @@ ws_channel_idx = [
 ]
 
 ws = pd.DataFrame(
-    data=np.vstack((ws_dict['sweep_0001']['analogScans'], ws_dict['sweep_0001']['digitalScans'])).T,
+    data=np.vstack((ws_dict[list(ws_dict.keys())[1]]['analogScans'], ws_dict[list(ws_dict.keys())[1]]['digitalScans'])).T,
     columns=ws_channel_idx,
 )
 
