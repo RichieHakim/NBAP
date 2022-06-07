@@ -50,7 +50,7 @@ print(path_self, path_script, dir_save, dir_s2p, path_ws, path_cameraCSV, path_n
 
 ## set paths
 # dir_save = '/n/data1/hms/neurobio/sabatini/rich/analysis/suite2p_output/'
-# Path(dir_save).mkdir(parents=True, exist_ok=True)
+Path(dir_save).mkdir(parents=True, exist_ok=True)
 
 
 # path_script = '/n/data1/hms/neurobio/sabatini/rich/github_repos/s2p_on_o2/remote_run_s2p.py'
@@ -65,7 +65,7 @@ print(path_self, path_script, dir_save, dir_s2p, path_ws, path_cameraCSV, path_n
 
 params_template = {
     'paths': {
-        'dir_github': '/media/rich/Home_Linux_partition/github_repos/',
+        'dir_github': dir_github,
         'dir_s2p': dir_s2p,
         'path_ws': path_ws,
         'path_cameraCSV': path_cameraCSV,

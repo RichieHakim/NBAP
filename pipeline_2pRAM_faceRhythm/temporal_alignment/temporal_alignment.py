@@ -30,7 +30,6 @@ print(f'## IMPORT LIBRARIES.  time: {time.ctime()}')
 
 import sys
 sys.path.append(params['paths']['dir_github'])
-print(params['paths']['dir_github'])
 
 from basic_neural_processing_modules import  h5_handling, spectral, indexing
 
@@ -51,7 +50,7 @@ import torch
 from pathlib import Path
 from tqdm import tqdm
 
-from torchinterp1d import torchinterp1d
+import torchinterp1d
 
 
 

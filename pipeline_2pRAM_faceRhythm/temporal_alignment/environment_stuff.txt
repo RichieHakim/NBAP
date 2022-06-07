@@ -22,3 +22,5 @@ pip3 install torch torchvision torchaudio --extra-index-url https://download.pyt
 # git clone https://github.com/aliutkus/torchinterp1d
 # cd torchinterp1d
 # pip install -e .
+
+pip install pywavesurfer
