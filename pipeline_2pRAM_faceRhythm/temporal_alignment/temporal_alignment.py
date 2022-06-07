@@ -219,6 +219,15 @@ sig_accSpec_idx_SI = scipy.interpolate.interp1d(
     kind='cubic',
 )(sig_SIFrameTimes__idx_ws)
 
+sig_toneSpec_idx_SI = scipy.interpolate.interp1d(
+    x=np.arange(0, num_samples_ws),
+    y=sig_toneSpec__idx_ws,
+    kind='cubic',
+)(sig_SIFrameTimes__idx_ws)
+
+
+## Prepare camPulse times for interpolation
+print(f'## creating SI indices. time: {time.ctime()}')
 
 sig_camPulses__idx_cam = cameraCSV[:,0]
 sig_camDatetimes__idx_cam = cameraCSV[:,3]
@@ -305,6 +314,15 @@ print(f'## SAVE OUTPUTS.  time: {time.ctime()}')
 
 np.save(str(Path(dir_save) / 'SxxNorm_idxS2p.npy'), sig_SxxNorm__idx_s2p)
 np.save(str(Path(dir_save) / 'positionsCDR_idxS2p.npy'), sig_posCDR__idx_s2p)
+
+h5_handling.simple_save(
+    dict_to_save={
+        'sig_lickBool__idx_SI': sig_lickBool__idx_SI,
+        'sig_accSpec_idx_SI': sig_accSpec_idx_SI,
+        'sig_toneSpec_idx_SI': sig_toneSpec_idx_SI,
+    },
+    path=str(Path(dir_save) / 'ws_signals_aligned_to_SI.h5'),
+)
 
 print(f'## RUN COMPLETED.  time: {time.ctime()}')
 
