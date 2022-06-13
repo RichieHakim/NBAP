@@ -298,7 +298,7 @@ tmp_normFactor = torch.mean(tmp, dim=(0,1,2))
 norm_factor = 0.9
 
 sig_SxxNorm__idx_s2p = tmp / ((tmp_normFactor[None,None,None,:] * norm_factor) + (1-norm_factor))
-
+sig_SxxNorm__idx_s2p = sig_SxxNorm__idx_s2p.type(torch.float32)
 
 
 x_tiled = torch.tile(x, (y.shape[1], 1)).to(device)

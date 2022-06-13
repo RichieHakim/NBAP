@@ -228,7 +228,8 @@ tqm, goodROIs_tqm = ca2p_preprocessing.trace_quality_metrics(
 
 print(f'Trace quality metric inclusion: num good cells: {goodROIs_tqm.sum()}, num bad cells: {(~goodROIs_tqm).sum()}')
 
-goodROIs = goodROIs_ransacEVR * goodROIs_tqm
+# goodROIs = goodROIs_ransacEVR * goodROIs_tqm
+goodROIs = np.logical_and(goodROIs_ransacEVR, goodROIs_tqm)
 print(f'Conjuntive denoising inclusion: num good cells: {goodROIs.sum()}, num bad cells: {(~goodROIs).sum()}')
 
 

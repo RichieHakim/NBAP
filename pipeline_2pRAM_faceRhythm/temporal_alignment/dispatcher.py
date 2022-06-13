@@ -1,17 +1,3 @@
-"""
-In the google drive folder, there needs to be files called:
-- model.py
-    - this should contain a function called 'make_model'
-- params.json
-    - this should contain the params dictionary used to make the model
-- classifier.pkl
-    - this should contain an item called 'classifier' that contains
-       the classifier used to make the model
-- ['fileName_state_dict'].pth
-    - this should contain the state_dict of the model
-    - name should be specified below
-"""
-
 
 # from IPython.core.display import display, HTML
 # display(HTML("<style>.container { width:95% !important; }</style>"))
