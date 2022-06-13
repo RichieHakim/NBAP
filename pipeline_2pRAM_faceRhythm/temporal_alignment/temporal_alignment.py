@@ -323,6 +323,13 @@ h5_handling.simple_save(
     },
     path=str(Path(dir_save) / 'ws_signals_aligned_to_SI.h5'),
 )
+h5_handling.simple_save(
+    dict_to_save={
+        'sig_wsIdx__idx_cam': sig_wsIdx__idx_cam,
+        'sig_SIFrameTimes__idx_ws': sig_SIFrameTimes__idx_ws,
+    },
+    path=str(Path(dir_save) / 'alignmentTemplate_s2p_to_cam.h5'),
+)
 
 print(f'## RUN COMPLETED.  time: {time.ctime()}')
 
