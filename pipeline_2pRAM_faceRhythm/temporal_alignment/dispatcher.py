@@ -120,12 +120,11 @@ sbatch_config_list = \
 [f"""#!/usr/bin/bash
 #SBATCH --job-name={name_slurm}
 #SBATCH --output={path}
-#SBATCH --gres=gpu:rtx6000:1
-#SBATCH --partition=gpu_requeue
-#SBATCH -c 8
+#SBATCH --partition=short
+#SBATCH -c 1
 #SBATCH -n 1
-#SBATCH --mem=64GB
-#SBATCH --time=0-00:05:00
+#SBATCH --mem=4GB
+#SBATCH --time=0-00:01:00
 
 unset XDG_RUNTIME_DIR
 
@@ -143,9 +142,14 @@ echo "starting job"
 python "$@"
 """ for path in paths_log]
 
+#SBATCH --job-name={name_slurm}
+#SBATCH --output={path}
 #SBATCH --gres=gpu:rtx6000:1
 #SBATCH --partition=gpu_requeue
-
+#SBATCH -c 8
+#SBATCH -n 1
+#SBATCH --mem=64GB
+#SBATCH --time=0-00:05:00
 
 server.batch_run(
     paths_scripts=paths_scripts,
