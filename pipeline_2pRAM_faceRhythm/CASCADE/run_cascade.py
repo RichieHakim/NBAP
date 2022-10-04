@@ -46,7 +46,7 @@ import yaml
 import sys
 # sys.path.append('/n/data1/hms/neurobio/sabatini/rich/github_repos/')
 sys.path.append(params['dir_github'])
-from basic_neural_processing_modules import ca2p_preprocessing, timeSeries, math_functions, indexing, pickle_helpers
+from basic_neural_processing_modules import ca2p_preprocessing, timeSeries, math_functions, indexing, file_helpers
 
 
 import cascade2p
@@ -58,7 +58,7 @@ from cascade2p.utils import plot_dFF_traces, plot_noise_level_distribution, plot
 
 
 
-denoisingVariables = pickle_helpers.simple_load(params['path_denoisingVariables_data'])
+denoisingVariables = file_helpers.pickle_load(params['path_denoisingVariables_data'])
 
 dFoF = denoisingVariables['dFoF_denoised']
 goodROIs_denoising = denoisingVariables['goodROIs_denoising']

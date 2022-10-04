@@ -99,7 +99,7 @@ import sys
 dir_github = params['paths']['dir_github']
 sys.path.append(dir_github)
 
-from basic_neural_processing_modules import ca2p_preprocessing, path_helpers, similarity, pickle_helpers, misc, featurization
+from basic_neural_processing_modules import ca2p_preprocessing, path_helpers, similarity, file_helpers, misc, featurization
 
 
 
@@ -355,7 +355,7 @@ ransac_denoising = {
 }
 
 path_helpers.mkdir(Path(path_save_denoisingVariables).parent)
-pickle_helpers.simple_save(ransac_denoising, str(path_save_denoisingVariables))
+file_helpers.pickle_save(ransac_denoising, str(path_save_denoisingVariables))
 
 
 

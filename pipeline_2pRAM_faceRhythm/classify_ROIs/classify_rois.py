@@ -45,7 +45,7 @@ import sys
 sys.path.append(params['dir_github'])
 
 print('starting: importing custom modules')
-from basic_neural_processing_modules import pickle_helpers, indexing, torch_helpers
+from basic_neural_processing_modules import file_helpers, indexing, torch_helpers
 
 from NBAP.pipeline_2pRAM_faceRhythm.classify_ROIs import util
 print('completed: importing custom modules')
@@ -195,7 +195,7 @@ print('complete: running scattering wavelet transform')
 
 print('starting: importing and running classifier')
 from util import Classifier
-classifier_vars = pickle_helpers.simple_load(path_classifier)
+classifier_vars = file_helpers.pickle_load(path_classifier)
 classifier = classifier_vars['classifier']
 
 preds = classifier(features_nn, latents_swt, return_preds_proba='preds')
@@ -318,6 +318,6 @@ classification_output = {
     'sf_sparse': sf_sparse,
 }
 
-pickle_helpers.simple_save(classification_output, str(Path(dir_save) / 'classification_output.pkl'))
+file_helpers.pickle_save(classification_output, str(Path(dir_save) / 'classification_output.pkl'))
 print('completed: saving')
 print(f'RUN COMPLETE {time.ctime()}')
