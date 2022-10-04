@@ -42,6 +42,13 @@ import gc
 from pathlib import Path
 import yaml
 
+# check environment
+import os
+print(f'Conda Environment: ' + os.environ['CONDA_DEFAULT_ENV'])
+
+from platform import python_version
+print(f'python version: {python_version()}')
+
 
 import sys
 # sys.path.append('/n/data1/hms/neurobio/sabatini/rich/github_repos/')

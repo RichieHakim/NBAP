@@ -1,3 +1,11 @@
+# check environment
+import os
+print(f'Conda Environment: ' + os.environ['CONDA_DEFAULT_ENV'])
+
+from platform import python_version
+print(f'python version: {python_version()}')
+
+
 ### batch_run stuff
 from pathlib import Path
 

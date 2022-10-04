@@ -45,6 +45,13 @@ Cleaning is done in 3 steps:
     2. Exclude traces with high correlation to motion correction
     3. Exclude traces with poor trace quality metrics
 """
+# check environment
+import os
+print(f'Conda Environment: ' + os.environ['CONDA_DEFAULT_ENV'])
+
+from platform import python_version
+print(f'python version: {python_version()}')
+
 
 ### batch_run stuff
 from pathlib import Path
