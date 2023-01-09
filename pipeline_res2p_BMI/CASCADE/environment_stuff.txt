@@ -1,0 +1,8 @@
+conda create -n Cascade python=3.7 tensorflow==2.3 keras==2.3.1 h5py numpy scipy matplotlib seaborn ruamel.yaml
+conda activate Cascade
+cd Cascade (wherever that is)
+pip install -e .
+
+
+pip install jupyter scikit-learn tqdm numba pynwb
+pip install torch torchvision torchaudio
