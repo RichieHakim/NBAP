@@ -66,12 +66,15 @@ from cascade2p import cascade # local folder
 
 ## import neural data
 
+print(f'Starting: Importing data from {params["make_dFoF"]["dir_s2p"]}')
 F , Fneu , iscell , ops , spks , stat , num_frames_S2p = ca2p_preprocessing.import_s2p(Path(params['make_dFoF']['dir_s2p']))
+print(f'Completed: Importing data')
 
 
 channelOffset_correction = params['make_dFoF']['channelOffset_correction']
 percentile_baseline = params['make_dFoF']['percentile_baseline']
 
+print(f'Starting: Calculating dFoF from F and Fneu, using channelOffset_correction={channelOffset_correction} and percentile_baseline={percentile_baseline}')
 dFoF , dF , F_neuSub , F_baseline = ca2p_preprocessing.make_dFoF(
     F=F + channelOffset_correction,
     Fneu=Fneu + channelOffset_correction,
@@ -80,10 +83,12 @@ dFoF , dF , F_neuSub , F_baseline = ca2p_preprocessing.make_dFoF(
     multicore_pref=True,
     verbose=True
 )
+print(f'Completed: Calculating dFoF')
 
 
 ## smooth dFoF
 
+print(f'Starting: Smoothing dFoF with gaussian kernel of width {params["smoothing_win"]} ms')
 dFoF_smooth = timeSeries.convolve_along_axis(
     dFoF,
     kernel=math_functions.gaussian(
@@ -97,13 +102,16 @@ dFoF_smooth = timeSeries.convolve_along_axis(
     multicore_pref=True,
     verbose=True
 )
+print(f'Completed: Smoothing dFoF')
 
 
 
+## run cascade
 
+print(f'Loading model: {params["model"]}')
 cascade.download_model('update_models', model_folder=str(Path(params['dir_github']) / 'Cascade' / 'Pretrained_models'),verbose = 1)
-
 cascade.download_model(params['model'], model_folder=str(Path(params['dir_github']) / 'Cascade' / 'Pretrained_models'), verbose = 1)
+print(f'Loaded model')
 
 yaml_file = open(str(Path(params['dir_github']) / 'Cascade' / 'Pretrained_models' / 'available_models.yaml'))
 X = yaml.load(yaml_file, Loader=yaml.Loader)

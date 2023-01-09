@@ -56,7 +56,7 @@ params_template = {
     'dir_github': '/n/data1/hms/neurobio/sabatini/rich/github_repos',
     'verbosity_cascadePredict': 0,
     'make_dFoF': {
-        'path_s2p': dir_s2p,
+        'dir_s2p': dir_s2p,
         'channelOffset_correction': 200,
         'percentile_baseline': 20,
         'neuropil_fraction': 0.7,
@@ -120,9 +120,9 @@ sbatch_config_list = \
 #SBATCH --job-name={name_slurm}
 #SBATCH --output={path}
 #SBATCH --partition=short
-#SBATCH -c 4
+#SBATCH -c 20
 #SBATCH -n 1
-#SBATCH --mem=8GB
+#SBATCH --mem=32GB
 #SBATCH --time=0-00:02:00
 
 unset XDG_RUNTIME_DIR
