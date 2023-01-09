@@ -119,12 +119,11 @@ sbatch_config_list = \
 [f"""#!/usr/bin/bash
 #SBATCH --job-name={name_slurm}
 #SBATCH --output={path}
-#SBATCH --gres=gpu:rtx6000:1
-#SBATCH --partition=gpu_requeue
+#SBATCH --partition=short
 #SBATCH -c 20
 #SBATCH -n 1
-#SBATCH --mem=16GB
-#SBATCH --time=0-00:05:00
+#SBATCH --mem=32GB
+#SBATCH --time=0-03:30:00
 
 unset XDG_RUNTIME_DIR
 
@@ -133,7 +132,7 @@ cd /n/data1/hms/neurobio/sabatini/rich/
 date
 
 echo "loading modules"
-module load gcc/9.2.0
+module load gcc/9.2.0 cuda
 
 echo "activating environment"
 source activate Cascade

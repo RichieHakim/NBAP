@@ -62,6 +62,13 @@ checks.check_packages()
 from cascade2p import cascade # local folder
 # from cascade2p.utils import plot_dFF_traces, plot_noise_level_distribution, plot_noise_matched_ground_truth
 
+import tensorflow as tf
+## check if GPU is available
+print(f'GPU available: {tf.test.is_gpu_available()}')
+print(f'GPU name: {tf.test.gpu_device_name()}')
+print(f'Built with CUDA: {tf.test.is_built_with_cuda()}')
+print(f'Built with gpu support: {tf.test.is_built_with_gpu_support()}')
+
 
 
 ## import neural data
