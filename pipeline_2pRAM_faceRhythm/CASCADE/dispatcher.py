@@ -13,13 +13,13 @@ import glob
 
 ### Import personal libraries
 # dir_github = '/media/rich/Home_Linux_partition/github_repos'
-dir_github = '/n/data1/hms/neurobio/sabatini/rich/github_repos'
+# dir_github = '/n/data1/hms/neurobio/sabatini/rich/github_repos'
 
-import sys
-sys.path.append(dir_github)
+# import sys
+# sys.path.append(dir_github)
 # %load_ext autoreload
 # %autoreload 2
-from basic_neural_processing_modules import container_helpers, server
+from bnpm import container_helpers, server
 # from s2p_on_o2 import remote_run_s2p
 
 
@@ -49,9 +49,9 @@ Path(dir_save).mkdir(parents=True, exist_ok=True)
 
 
 params_template = {
-    'smoothing_win': 200,
-    'Fs': 5.14,
-    'model': 'Global_EXC_5Hz_smoothing200ms',
+    'smoothing_win': 50,
+    'Fs': 30,
+    'model': 'Global_EXC_30Hz_smoothing50ms_causalkernel',
     'batchSize_nROIs': 10,
     'dir_github': '/n/data1/hms/neurobio/sabatini/rich/github_repos',
     'path_denoisingVariables_data': dir_data,
