@@ -52,8 +52,8 @@ print(f'python version: {python_version()}')
 
 import sys
 # sys.path.append('/n/data1/hms/neurobio/sabatini/rich/github_repos/')
-sys.path.append(params['dir_github'])
-from basic_neural_processing_modules import ca2p_preprocessing, timeSeries, math_functions, indexing, file_helpers
+# sys.path.append(params['dir_github'])
+from bnpm import ca2p_preprocessing, timeSeries, math_functions, indexing, file_helpers
 
 
 import cascade2p
