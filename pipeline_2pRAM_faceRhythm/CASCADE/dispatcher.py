@@ -114,7 +114,8 @@ sbatch_config_list = \
 [f"""#!/usr/bin/bash
 #SBATCH --job-name={name_slurm}
 #SBATCH --output={path}
-#SBATCH --partition=short
+#SBATCH --gres=gpu:rtx6000:1
+#SBATCH --partition=gpu_requeue
 #SBATCH -c 4
 #SBATCH -n 1
 #SBATCH --mem=8GB
