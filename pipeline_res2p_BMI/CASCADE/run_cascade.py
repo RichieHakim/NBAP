@@ -141,7 +141,7 @@ spike_prob = np.concatenate([cascade.predict(
 ) for batch in tqdm(indexing.make_batches(
     dFoF_smooth, 
     batch_size=params['batchSize_nROIs']
-), total=int(np.ceil(dFoF_smooth.shape[0]/params['batchSize_nROIs'])))], axis=0)
+), total=int(np.ceil(dFoF_smooth.shape[0]/params['batchSize_nROIs'])))], axis=0).astype(np.float32)
 
 print(f'COMPLETED CASCADE, time: {time.ctime()}')
 
