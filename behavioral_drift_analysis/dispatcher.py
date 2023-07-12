@@ -6,7 +6,7 @@ import copy
 
 print(f"dispatcher environment: {os.environ['CONDA_DEFAULT_ENV']}")
 
-from bnpm import server
+from bnpm.server import batch_run
 
 path_self, path_script, dir_save, dir_FR_template, dir_FR_current, name_job, name_slurm, name_env = sys.argv
 
@@ -109,7 +109,7 @@ python "$@"
 # SBATCH --partition=gpu_requeue
 
 
-server.batch_run(
+batch_run(
     paths_scripts=paths_scripts,
     params_list=params_list,
     sbatch_config_list=sbatch_config_list,
