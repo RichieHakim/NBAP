@@ -57,7 +57,7 @@ def make_cp_init(k_tensor, shape_dense_tensor, modes_fixed=[0,1,], device='cpu')
         if i_mode in modes_fixed:
             kt[i_mode] = torch.as_tensor(k_tensor[i_mode], dtype=torch.float32, device=device)
         else:
-            perm = torch.randperm(min(shape_dense_tensor[i_mode], k_tensor[i_mode].shape[0]), device=device)
+            perm = torch.randperm(k_tensor[i_mode].shape[0], device=device)
             kt[i_mode] = torch.as_tensor(k_tensor[i_mode], dtype=torch.float32, device=device)[perm]
         
     return tl.cp_tensor.CPTensor((None, kt))
