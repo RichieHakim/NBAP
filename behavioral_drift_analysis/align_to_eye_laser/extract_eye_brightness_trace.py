@@ -39,6 +39,8 @@ bnpm.fil_helpers.pickle_save(
     obj={
         'idx_start': idx_start,
         'idx_end': idx_end,
+        'trace_start': trace_start,
+        'trace_end': trace_end,
         'path_vid': path_vid,
         'path_mask': path_mask,
     },
