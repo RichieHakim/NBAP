@@ -48,6 +48,6 @@ bnpm.file_helpers.pickle_save(
         'path_vid': path_vid,
         'path_mask': path_mask,
     },
-    path=str(Path(dir_save) / 'idx_eye_laser.pkl'),
+    filepath=str(Path(dir_save) / 'idx_eye_laser.pkl'),
 )
 print(f'idx_eye_laser.pkl saved to {dir_save}')
