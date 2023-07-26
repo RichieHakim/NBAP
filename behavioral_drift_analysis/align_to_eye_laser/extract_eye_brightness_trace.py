@@ -7,7 +7,7 @@ import decord
 import bnpm
 
 import sys
-path_script, dir_save, path_params = sys.argv
+path_script, path_params, dir_save = sys.argv
 
 params = bnpm.file_helpers.json_load(path_params)
 
