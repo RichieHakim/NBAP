@@ -29,7 +29,7 @@ params_template = {
         "channelOffset_correction": 0,
         "percentile_baseline": 30,
         "neuropil_fraction": 0.7,
-        "rolling_percentile_window": Fs*15*60,
+        "rolling_percentile_window": 30*15*60,
     },
     'thresh': {
         'var_ratio__Fneu_over_F': (0, 0.5),
@@ -99,10 +99,10 @@ sbatch_config_list = \
 #SBATCH --job-name={name_slurm}
 #SBATCH --output={path}
 #SBATCH --partition=short
-#SBATCH -c 4
+#SBATCH -c 8
 #SBATCH -n 1
-#SBATCH --mem=32GB
-#SBATCH --time=0-00:5:00
+#SBATCH --mem=20GB
+#SBATCH --time=0-00:10:00
 
 unset XDG_RUNTIME_DIR
 

@@ -72,6 +72,10 @@ dFoF , dF , F_neuSub , F_baseline_roll = bnpm.ca2p_preprocessing.make_dFoF(
 # #     'baseline_var': np.inf,
 # # }
 thresh = params['thresh']
+
+## remove inf and negative inf. Set to max and min of the data type
+dFoF[np.isposinf(dFoF)] = np.finfo(dFoF.dtype).max
+dFoF[np.isneginf(dFoF)] = np.finfo(dFoF.dtype).min
     
 tqm, iscell_tqm = bnpm.ca2p_preprocessing.trace_quality_metrics(
     F=F,
