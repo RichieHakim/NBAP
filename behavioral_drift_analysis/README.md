@@ -15,7 +15,7 @@
    d. Download all dFoF and tqm files to local
 7. Run ROICaT
    a. Download all stat_and_ops files to local
-   b. Run ROICaT tracking and classification locally
+   b. Run ROICaT tracking and classification locally. If it is a BMI animal, probably use the day 0 iscell instead.
    c. Align dFoF across sessions using above tracking and classification outputs 
 8. Download logger files to local
 9. Download wavesurfer files to local
