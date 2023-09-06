@@ -1,6 +1,8 @@
 1. Download camera csv files to local
-2. Make eye_laser trace extractions locally
-3. Face-rhythm
+2. Eye_laser_masks
+   a. Make eye_laser masks locally
+   b. Run eye_laser_extraction on o2
+4. Face-rhythm
    a. Download a single camera video to local
    b. Make ROI masks locally
    c. Run face-rythm on one video locally.

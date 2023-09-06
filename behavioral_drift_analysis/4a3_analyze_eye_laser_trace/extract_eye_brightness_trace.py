@@ -21,13 +21,14 @@ mask = torch.as_tensor(np.load(path_mask), dtype=torch.float32).to(DEVICE)
 print(f'Mask loaded: {path_mask}')
 vid = decord.VideoReader(path_vid, ctx=decord.cpu(0))
 print(f'Video loaded: {path_vid}')
+fps = vid.get_avg_fps()
 
 prepare_frames = lambda f: torch.as_tensor(f.asnumpy()[...,0], dtype=torch.float32).to(DEVICE)
 extract_trace = lambda f: torch.einsum('fhw,hw -> f', prepare_frames(f), mask)
 
 trace_start = torch.cat([extract_trace(v) for v in bnpm.indexing.make_batches(vid, batch_size=100, length=10000)], dim=0)
 
-idx_fastForward = int(60*59 * vid.get_avg_fps())
+idx_fastForward = int(60*59 * fps)
 
 trace_end = torch.cat([extract_trace(v) for v in bnpm.indexing.make_batches(vid, batch_size=100, idx_start=idx_fastForward)], dim=0)
 print(f'traces_extracted. trace_start.shape: {trace_start.shape}, trace_end.shape: {trace_end.shape}')
@@ -47,6 +48,8 @@ bnpm.file_helpers.pickle_save(
         'trace_end': trace_end,
         'path_vid': path_vid,
         'path_mask': path_mask,
+        'idx_fastForward': idx_fastForward,
+        'fps': fps,
     },
     filepath=str(Path(dir_save) / 'idx_eye_laser.pkl'),
 )
