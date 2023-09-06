@@ -28,7 +28,7 @@ extract_trace = lambda f: torch.einsum('fhw,hw -> f', prepare_frames(f), mask)
 
 trace_start = torch.cat([extract_trace(v) for v in bnpm.indexing.make_batches(vid, batch_size=100, length=10000)], dim=0)
 
-idx_fastForward = int(60*59 * fps)
+idx_fastForward = int(params['time_fastForward'] * fps)
 
 trace_end = torch.cat([extract_trace(v) for v in bnpm.indexing.make_batches(vid, batch_size=100, idx_start=idx_fastForward)], dim=0)
 print(f'traces_extracted. trace_start.shape: {trace_start.shape}, trace_end.shape: {trace_end.shape}')
@@ -48,6 +48,7 @@ bnpm.file_helpers.pickle_save(
         'trace_end': trace_end,
         'path_vid': path_vid,
         'path_mask': path_mask,
+        'time_fastForward': params['time_fastForward'],
         'idx_fastForward': idx_fastForward,
         'fps': fps,
     },

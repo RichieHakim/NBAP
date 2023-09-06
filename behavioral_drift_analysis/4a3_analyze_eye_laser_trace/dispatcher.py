@@ -8,7 +8,7 @@ print(f"dispatcher environment: {os.environ['CONDA_DEFAULT_ENV']}")
 
 from bnpm.server import batch_run
 
-path_self, path_script, dir_save, path_vid, path_mask, name_job, name_slurm, name_env = sys.argv
+path_self, path_script, dir_save, path_vid, path_mask, name_job, name_slurm, name_env, time_fastForward = sys.argv
 
 ## set paths
 Path(dir_save).mkdir(parents=True, exist_ok=True)
@@ -17,6 +17,7 @@ Path(dir_save).mkdir(parents=True, exist_ok=True)
 params_template = {
     'path_vid': str(Path(path_vid)),
     'path_mask': str(Path(path_mask)),
+    'time_fastForward': float(time_fastForward),
 }
 
 
