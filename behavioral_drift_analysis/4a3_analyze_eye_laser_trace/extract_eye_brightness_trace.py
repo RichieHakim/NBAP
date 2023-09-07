@@ -40,6 +40,8 @@ idx_start = np.argmax(get_diff_smooth(trace_start))
 idx_end = np.argmin(get_diff_smooth(trace_end)) + idx_fastForward
 print(f'indices found. idx_start: {idx_start}, idx_end: {idx_end}')
 
+duration_start_end = (idx_end - idx_start) / fps
+
 bnpm.file_helpers.pickle_save(
     obj={
         'idx_start': idx_start,
@@ -51,6 +53,7 @@ bnpm.file_helpers.pickle_save(
         'time_fastForward': params['time_fastForward'],
         'idx_fastForward': idx_fastForward,
         'fps': fps,
+        'duration_start_end': duration_start_end,
     },
     filepath=str(Path(dir_save) / 'idx_eye_laser.pkl'),
 )
