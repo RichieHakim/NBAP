@@ -50,7 +50,9 @@ names_ws = [
     'y_galvo',
 ]
 
-ws = {name: trace for name, trace in zip(names_ws, ws_raw['sweep_0001']['analogScans'])}
+name_sweep = list(ws_raw.keys())[-1]
+print(f"using sweep: {name_sweep}")
+ws = {name: trace for name, trace in zip(names_ws, ws_raw[name_sweep]['analogScans'])}
 
 trace = ws['laser_pickoff']
 
@@ -89,7 +91,7 @@ val_abstimeModulated__idx_cam = csv[2]
 
 ts['val_abstimeModulated__idx_cam'] = val_abstimeModulated__idx_cam
 
-val_abstime__idx_cam = bnpm.indexing.moduloCounter_to_linearCounter(
+val_abstime__idx_cam = bnpm.circular.moduloCounter_to_linearCounter(
     trace=ts['val_abstimeModulated__idx_cam'],
     modulus=2**32,
     plot_pref=False,
@@ -201,7 +203,7 @@ n_frames_ws = len(ts['val_yGalvo__idx_ws'])
 
 val_idxWs__idx_ws = np.arange(n_frames_ws)
 
-val_idxNormLaser__idx_ws = (val_idxWs__idx_ws - ts['val_idxWsStartLaser']) / ts['val_idxWsEndLaser']
+val_idxNormLaser__idx_ws = (val_idxWs__idx_ws - ts['val_idxWsStartLaser']) / (ts['val_idxWsEndLaser'] - ts['val_idxWsStartLaser'])
 
 ts['val_idxNormLaser__idx_ws'] = val_idxNormLaser__idx_ws
 ts['val_idxWs__idx_ws'] = val_idxWs__idx_ws
@@ -215,9 +217,6 @@ val_idxNormLaser__idx_SI = scipy.interpolate.interp1d(
 
 ts['val_idxNormLaser__idx_SI'] = val_idxNormLaser__idx_SI
 
-
-
-ts['val_tca__idx_tca'].shape
 
 val_tca__idx_SI = scipy.interpolate.interp1d(
     x=ts['val_idxNormLaser__idx_tca'],
