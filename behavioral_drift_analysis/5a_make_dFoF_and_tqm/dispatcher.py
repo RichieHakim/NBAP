@@ -34,12 +34,12 @@ params_template = {
     'thresh': {
         'var_ratio__Fneu_over_F': (0, 0.6),
         'EV__F_by_Fneu': (0, 0.6),
-        'base_FneuSub': (100, 2000),
-        'base_F': (150, 5000),
-        'nsr_autoregressive': (0, 7),
-        'noise_derivMAD': (0, 0.025),
+        'base_FneuSub': (0, 2000),
+        'base_F': (0, 5000),
+        'nsr_autoregressive': (0, 20),
+        'noise_derivMAD': (0, 0.075),
         'max_dFoF': (0.75, 40),
-        'baseline_var': (0, 0.025),
+        'baseline_var': (0, 0.075),
     },
 }
 

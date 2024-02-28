@@ -91,7 +91,7 @@ val_abstimeModulated__idx_cam = csv[2]
 
 ts['val_abstimeModulated__idx_cam'] = val_abstimeModulated__idx_cam
 
-val_abstime__idx_cam = bnpm.indexing.moduloCounter_to_linearCounter(
+val_abstime__idx_cam = bnpm.circular.moduloCounter_to_linearCounter(
     trace=ts['val_abstimeModulated__idx_cam'],
     modulus=2**32,
     plot_pref=False,
@@ -138,19 +138,6 @@ peaks = scipy.signal.find_peaks(
 val_idxWs__idx_SI = peaks
 
 ts['val_idxWs__idx_SI'] = val_idxWs__idx_SI
-
-val_idxTca__idx_tca = np.arange(val_tca__idx_tca.shape[0])
-
-ts['val_idxTca__idx_tca'] = val_idxTca__idx_tca
-
-val_tca__idx_SI = scipy.interpolate.interp1d(
-    x=ts['val_idxTca__idx_tca'],
-    y=ts['val_tca__idx_tca'],
-    kind='cubic',
-    axis=0,
-    bounds_error=False,
-    fill_value=np.nan,
-)(ts['val_idxWs__idx_SI'])
 
 
 
